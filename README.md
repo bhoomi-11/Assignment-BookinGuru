@@ -44,7 +44,7 @@ npm start
 
 📄 .env.example
 
-<pre>```PORT=3000
+<pre>PORT=3000
 BASE_URL=<mock_api_base_url>
 AUTH_LOGIN=<mock_api_auth_login_path>
 AUTH_REFRESH_PATH=<mock_api_auth_refresh_path>
@@ -54,15 +54,15 @@ API_PASSWORD=<mock_api_password>
 REDIS_URL=<redis_connection_url>
 CACHE_TTL_MS=21600000
 MEMORY_CACHE_TTL_MS=3600000
-MEMORY_CACHE_MAX_ITEMS=100```</pre>
+MEMORY_CACHE_MAX_ITEMS=100</pre>
 
 
 📡 API Usage
 Request
-<pre>```GET /cities?country=PL&page=1&limit=10```</pre>
+<pre>GET /cities?country=PL&page=1&limit=10</pre>
 
 Response
-<pre>```{
+<pre>{
   "status": 200,
   "message": "Successfully fetched data",
   "data": {
@@ -79,7 +79,7 @@ Response
     ]
   },
   "source": "memory-cache"
-}```</pre>
+}</pre>
 
 ### 🏙 How We Determine If Something is a City
 Pre-fetch official cities list per country from a reliable API (countriesnow.space API).
