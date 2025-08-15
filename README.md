@@ -28,21 +28,23 @@ Supports pagination with `page` and `limit` query params (default limit: 10).
 ### 1️⃣ Clone the repository
 git clone <your-repo-url>
 cd <your-repo-folder>
-2️⃣ Install dependencies
+
+### 2️⃣ Install dependencies
 npm install
 
-3️⃣ Set environment variables
+### 3️⃣ Set environment variables
 cp .env.example .env
 
 # Then edit `.env` and replace placeholder values
-4️⃣ Start Redis (if running locally)
+### 4️⃣ Start Redis (if running locally)
 redis-server
 
-5️⃣ Start the server
+### 5️⃣ Start the server
 npm start
+
 📄 .env.example
 
-PORT=3000
+```PORT=3000
 BASE_URL=<mock_api_base_url>
 AUTH_LOGIN=<mock_api_auth_login_path>
 AUTH_REFRESH_PATH=<mock_api_auth_refresh_path>
@@ -52,14 +54,15 @@ API_PASSWORD=<mock_api_password>
 REDIS_URL=<redis_connection_url>
 CACHE_TTL_MS=21600000
 MEMORY_CACHE_TTL_MS=3600000
-MEMORY_CACHE_MAX_ITEMS=100
+MEMORY_CACHE_MAX_ITEMS=100```
+
 
 📡 API Usage
 Request
-GET /cities?country=PL&page=1&limit=10
+```GET /cities?country=PL&page=1&limit=10```
 
 Response
-{
+```{
   "status": 200,
   "message": "Successfully fetched data",
   "data": {
@@ -76,24 +79,19 @@ Response
     ]
   },
   "source": "memory-cache"
-}
+}```
 
-🏙 How We Determine If Something is a City
+### 🏙 How We Determine If Something is a City
 Pre-fetch official cities list per country from a reliable API (countriesnow.space API).
-
 Store this list in Redis for fast lookup.
-
 When processing pollution data:
-
 Sanitize city names (trim spaces, handle casing, fix common typos).
-
 Check against the official list — if not found, discard.
-
 Ignore entries with numbers or unlikely special characters.
-
 Ensure Wikipedia API returns a valid description.
 
-Caching Strategy
+
+**Caching Strategy**
 We use a two-tier cache to balance speed and persistence:
 
 1. In-Memory Cache
@@ -107,26 +105,18 @@ normalised:{country}:{page}:{limit}
 2. Redis Cache
 Persistent across restarts & multiple instances.
 
-Stores:
-
+**Stores:**
 countryCities:{iso2} → list of valid cities
-
 pollution:list:{country} → pollution API raw results
-
 wikiCache:{title} → Wikipedia descriptions
-
 normalised:{country}:{page}:{limit} → final processed paginated data
-
 TTL configurable (CACHE_TTL_MS).
 
-Cache Flow:
+**Cache Flow:**
 Check Memory → Check Redis → Fetch Fresh → Store in both → Return
 
-⚠ Limitations & Assumptions
+**Limitations & Assumptions**
 Wikipedia API may not return data for misspelled or unusual city names.
-
 Validation depends on countriesnow.space dataset accuracy.
-
 country query parameter must be ISO2 code (e.g., PL, IN).
-
 Cached results may delay updates from the source API until TTL expires.
