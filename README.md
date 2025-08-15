@@ -82,19 +82,19 @@ Response
 }</pre>
 
 ### 🏙 How We Determine If Something is a City
-Pre-fetch official cities list per country from a reliable API (countriesnow.space API).
-Store this list in Redis for fast lookup.
-When processing pollution data:
-Sanitize city names (trim spaces, handle casing, fix common typos).
-Check against the official list — if not found, discard.
-Ignore entries with numbers or unlikely special characters.
-Ensure Wikipedia API returns a valid description.
+Pre-fetch official cities list per country from a reliable API (countriesnow.space API).  
+Store this list in Redis for fast lookup.  
+When processing pollution data:  
+Sanitize city names (trim spaces, handle casing, fix common typos).  
+Check against the official list — if not found, discard.  
+Ignore entries with numbers or unlikely special characters.  
+Ensure Wikipedia API returns a valid description.  
 
 
 **Caching Strategy**
 We use a two-tier cache to balance speed and persistence:
 
-1. In-Memory Cache
+1. In-Memory Cache 
 Extremely fast retrieval for hot data.
 TTL configurable (MEMORY_CACHE_TTL_MS).
 Uses pagination-aware keys:
@@ -104,17 +104,17 @@ normalised:{country}:{page}:{limit}
 Persistent across restarts & multiple instances.
 
 **Stores:**
-countryCities:{iso2} → list of valid cities
-pollution:list:{country} → pollution API raw results
-wikiCache:{title} → Wikipedia descriptions
-normalised:{country}:{page}:{limit} → final processed paginated data
-TTL configurable (CACHE_TTL_MS).
+countryCities:{iso2} → list of valid cities 
+pollution:list:{country} → pollution API raw results   
+wikiCache:{title} → Wikipedia descriptions 
+normalised:{country}:{page}:{limit} → final processed paginated data   
+TTL configurable (CACHE_TTL_MS)   
 
 **Cache Flow:**
-Check Memory → Check Redis → Fetch Fresh → Store in both → Return
+Check Memory → Check Redis → Fetch Fresh → Store in both → Return  
 
 **Limitations & Assumptions**
-Wikipedia API may not return data for misspelled or unusual city names.
-Validation depends on countriesnow.space dataset accuracy.
-country query parameter must be ISO2 code (e.g., PL, IN).
-Cached results may delay updates from the source API until TTL expires.
+Wikipedia API may not return data for misspelled or unusual city names.  
+Validation depends on countriesnow.space dataset accuracy   
+country query parameter must be ISO2 code (e.g., PL, IN).  
+Cached results may delay updates from the source API until TTL expires.  
