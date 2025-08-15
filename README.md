@@ -35,7 +35,7 @@ npm install
 ### 3️⃣ Set environment variables
 cp .env.example .env
 
-# Then edit `.env` and replace placeholder values
+### Then edit `.env` and replace placeholder values
 ### 4️⃣ Start Redis (if running locally)
 redis-server
 
@@ -44,7 +44,7 @@ npm start
 
 📄 .env.example
 
-```PORT=3000
+<pre>```PORT=3000
 BASE_URL=<mock_api_base_url>
 AUTH_LOGIN=<mock_api_auth_login_path>
 AUTH_REFRESH_PATH=<mock_api_auth_refresh_path>
@@ -54,15 +54,15 @@ API_PASSWORD=<mock_api_password>
 REDIS_URL=<redis_connection_url>
 CACHE_TTL_MS=21600000
 MEMORY_CACHE_TTL_MS=3600000
-MEMORY_CACHE_MAX_ITEMS=100```
+MEMORY_CACHE_MAX_ITEMS=100```</pre>
 
 
 📡 API Usage
 Request
-```GET /cities?country=PL&page=1&limit=10```
+<pre>```GET /cities?country=PL&page=1&limit=10```</pre>
 
 Response
-```{
+<pre>```{
   "status": 200,
   "message": "Successfully fetched data",
   "data": {
@@ -79,7 +79,7 @@ Response
     ]
   },
   "source": "memory-cache"
-}```
+}```</pre>
 
 ### 🏙 How We Determine If Something is a City
 Pre-fetch official cities list per country from a reliable API (countriesnow.space API).
@@ -96,9 +96,7 @@ We use a two-tier cache to balance speed and persistence:
 
 1. In-Memory Cache
 Extremely fast retrieval for hot data.
-
 TTL configurable (MEMORY_CACHE_TTL_MS).
-
 Uses pagination-aware keys:
 normalised:{country}:{page}:{limit}
 
