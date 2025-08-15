@@ -91,29 +91,29 @@ Ignore entries with numbers or unlikely special characters.
 Ensure Wikipedia API returns a valid description.  
 
 
-**Caching Strategy**
+**Caching Strategy**  
 We use a two-tier cache to balance speed and persistence:
 
-1. In-Memory Cache 
-Extremely fast retrieval for hot data.
-TTL configurable (MEMORY_CACHE_TTL_MS).
-Uses pagination-aware keys:
-normalised:{country}:{page}:{limit}
+1. In-Memory Cache  
+Extremely fast retrieval for hot data  
+TTL configurable (MEMORY_CACHE_TTL_MS)  
+Uses pagination-aware keys:  
+normalised:{country}:{page}:{limit}  
 
-2. Redis Cache
+2. Redis Cache  
 Persistent across restarts & multiple instances.
 
-**Stores:**
-countryCities:{iso2} → list of valid cities 
+**Stores:**  
+countryCities:{iso2} → list of valid cities  
 pollution:list:{country} → pollution API raw results   
-wikiCache:{title} → Wikipedia descriptions 
+wikiCache:{title} → Wikipedia descriptions  
 normalised:{country}:{page}:{limit} → final processed paginated data   
 TTL configurable (CACHE_TTL_MS)   
 
-**Cache Flow:**
+**Cache Flow:**  
 Check Memory → Check Redis → Fetch Fresh → Store in both → Return  
 
-**Limitations & Assumptions**
+**Limitations & Assumptions**  
 Wikipedia API may not return data for misspelled or unusual city names.  
 Validation depends on countriesnow.space dataset accuracy   
 country query parameter must be ISO2 code (e.g., PL, IN).  
