@@ -32,6 +32,10 @@ class TTLCache {
       this.map.delete(oldestKey);
     }
   }
+
+  clear() {
+    this.map.clear();
+  }
 }
 
 module.exports = TTLCache;

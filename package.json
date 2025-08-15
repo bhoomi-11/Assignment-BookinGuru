@@ -7,7 +7,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --detectOpenHandles --forceExit",
     "start": "nodemon server.js"
   },
   "dependencies": {
@@ -18,6 +18,9 @@
     "redis": "^5.8.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "jest": "^30.0.5",
+    "nodemon": "^3.1.10",
+    "sinon": "^21.0.0",
+    "supertest": "^7.1.4"
   }
 }
